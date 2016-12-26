@@ -1,0 +1,3 @@
+include ':vmovier-mobile', ':vmovier-core'
+project(':vmovier-mobile').projectDir = new File('app')
+project(':vmovier-core').projectDir = new File('app-core')
