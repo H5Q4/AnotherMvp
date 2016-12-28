@@ -1,4 +1,4 @@
-package com.szhr.anothermvp.core.data.model;
+package com.szhr.anothermvp.core.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
