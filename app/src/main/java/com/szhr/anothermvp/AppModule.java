@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.github.jupittar.commlib.utilities.NetworkUtils;
+import com.szhr.anothermvp.core.SchedulerProvider;
 
 import java.io.File;
 
@@ -14,12 +15,19 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
+@SuppressWarnings("unused")
 public class AppModule {
 
-  private VmovierApp mApp;
+  private TmdbApp mApp;
 
-  AppModule(VmovierApp app) {
+  AppModule(TmdbApp app) {
     this.mApp = app;
+  }
+
+  @Provides
+  @Singleton
+  SchedulerProvider provideAppScheduler() {
+    return new AppSchedulerProvider();
   }
 
   @Provides

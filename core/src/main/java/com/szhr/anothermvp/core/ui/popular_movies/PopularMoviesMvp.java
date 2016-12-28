@@ -1,9 +1,12 @@
-package com.szhr.anothermvp.core.ui.hotmovies;
+package com.szhr.anothermvp.core.ui.popular_movies;
 
 import com.szhr.anothermvp.core.ui.base.BasePresenter;
 import com.szhr.anothermvp.core.ui.base.Mvp;
 
-public interface HotMoviesMvp {
+@SuppressWarnings("unused")
+public interface PopularMoviesMvp {
+
+  interface Interactor extends Mvp.Interactor {}
 
   interface View extends Mvp.View {}
 

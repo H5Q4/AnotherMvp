@@ -16,6 +16,7 @@ dependencies {
   compile rootProject.ext.libSquareup.rxjavaAdapter4Retrofit2
   compile rootProject.ext.libSquareup.gsonConverter4Retrofit2
 
+  compile rootProject.ext.libGoogle.gson
   compile rootProject.ext.libGoogle.dagger
   annotationProcessor rootProject.ext.libGoogle.daggerCompiler
 }

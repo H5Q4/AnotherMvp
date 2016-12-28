@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.szhr.anothermvp.core.util.Constants;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
@@ -13,6 +14,7 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,26 +27,26 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
+@SuppressWarnings("unused")
 public class NetworkModule {
 
   @Provides
   @Singleton
-  public VmovierApi provideVmovierApi(Retrofit retrofit) {
-    return retrofit.create(VmovierApi.class);
+  public TmdbService provideTmdbService(Retrofit retrofit) {
+    return retrofit.create(TmdbService.class);
   }
 
   //region Retrofit
   @Provides
   @Singleton
   public Retrofit provideRetrofit(
-      String baseUrl,
       Converter.Factory converterFactory,
       CallAdapter.Factory callAdapterFactory,
       OkHttpClient okHttpClient
       ) {
     return new Retrofit
         .Builder()
-        .baseUrl(baseUrl)
+        .baseUrl(Constants.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(converterFactory)
         .addCallAdapterFactory(callAdapterFactory)
@@ -75,8 +77,9 @@ public class NetworkModule {
   @Singleton
   public OkHttpClient provideOkHttpClient(
       @Named("isDebug") boolean isDebug,
-      HttpLoggingInterceptor loggingInterceptor,
       Cache cache,
+      HttpLoggingInterceptor loggingInterceptor,
+      @Named("authInterceptor") Interceptor authInterceptor,
       @Named("cacheInterceptor") Interceptor cacheInterceptor,
       @Named("offlineCacheInterceptor") Interceptor offlineInterceptor
       ) {
@@ -119,6 +122,25 @@ public class NetworkModule {
 
   @Provides
   @Singleton
+  @Named("authInterceptor")
+  public Interceptor provideAuthInterceptor() {
+    return chain -> {
+      Request request = chain.request();
+      HttpUrl url = request.url();
+      HttpUrl newUrl = url.newBuilder()
+          .addQueryParameter("api_key", Constants.API_KEY)
+          .addQueryParameter("language", "en-US")
+          .build();
+      Request newRequest = request.newBuilder()
+          .url(newUrl)
+          .build();
+
+      return chain.proceed(newRequest);
+    };
+  }
+
+  @Provides
+  @Singleton
   @Named("cacheInterceptor")
   public Interceptor provideCacheInterceptor() {
     return chain -> {
@@ -152,6 +174,36 @@ public class NetworkModule {
       }
 
       return chain.proceed(request);
+    };
+  }
+
+  @Provides
+  @Singleton
+  @Named("retryInterceptor")
+  public Interceptor provideRetryInterceptor() {
+    return chain -> {
+      Request request = chain.request();
+      Response response = null;
+      IOException exception = null;
+
+      int tryCount = 0;
+      while (tryCount < Constants.RETRY_COUNT && (null == response || !response.isSuccessful())) {
+        // retry the request
+        try {
+          response = chain.proceed(request);
+        } catch (IOException e) {
+          exception = e;
+        } finally {
+          tryCount++;
+        }
+      }
+
+      // throw last exception
+      if (null == response && null != exception)
+        throw exception;
+
+      // otherwise just pass the original response on
+      return response;
     };
   }
   //endregion

@@ -5,7 +5,7 @@ import android.app.Application;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
-public class VmovierApp extends Application {
+public class TmdbApp extends Application {
 
   private static final String LOGGER_TAG = "VMOVIERLOG";
 

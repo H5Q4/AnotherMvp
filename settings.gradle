@@ -1,4 +1,4 @@
-include ':vmovier-mobile', ':vmovier-core', ':android-common'
-project(':vmovier-mobile').projectDir = new File('app')
-project(':vmovier-core').projectDir = new File('core')
+include ':tmdb-mobile', ':tmdb-core', ':android-common'
+project(':tmdb-mobile').projectDir = new File('app')
+project(':tmdb-core').projectDir = new File('core')
 project(':android-common').projectDir = new File('commlib')

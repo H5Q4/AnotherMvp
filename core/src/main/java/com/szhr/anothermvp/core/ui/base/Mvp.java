@@ -2,7 +2,10 @@ package com.szhr.anothermvp.core.ui.base;
 
 import rx.Subscription;
 
+@SuppressWarnings("unused")
 public interface Mvp {
+
+  interface Interactor {}
 
   interface View {}
 

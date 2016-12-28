@@ -1,222 +1,251 @@
 package com.szhr.anothermvp.core.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Movie {
 
-  private String postid;
-  private String title;
-  private String pid;
-  private String app_fu_title;
-  private String is_xpc;
-  private String is_promote;
-  private String is_xpc_zp;
-  private String is_xpc_cp;
-  private String is_xpc_fx;
-  private String is_album;
-  private String tags;
-  private String recent_hot;
-  private String discussion;
-  private String image;
-  private String rating;
-  private String duration;
-  private String publish_time;
-  private String like_num;
-  private String share_num;
-  private String request_url;
+  @SerializedName("adult")
+  private boolean adult;
+  @SerializedName("backdrop_path")
+  private String backdropPath;
+  @SerializedName("belongs_to_collection")
+  private Object belongsToCollection;
+  @SerializedName("budget")
+  private int budget;
+  @SerializedName("homepage")
+  private String homepage;
+  @SerializedName("id")
+  private int id;
+  @SerializedName("imdb_id")
+  private String imdbId;
+  @SerializedName("original_language")
+  private String originalLanguage;
+  @SerializedName("original_title")
+  private String originalTitle;
+  @SerializedName("overview")
+  private String overview;
+  @SerializedName("popularity")
+  private double popularity;
+  @SerializedName("poster_path")
+  private Object posterPath;
+  @SerializedName("release_date")
+  private String releaseDate;
+  @SerializedName("revenue")
+  private int revenue;
+  @SerializedName("runtime")
+  private int runtime;
+  @SerializedName("status")
+  private String status;
+  @SerializedName("tagline")
+  private String tagline;
+  @SerializedName("video")
+  private boolean video;
+  @SerializedName("vote_average")
+  private double voteAverage;
+  @SerializedName("vote_count")
+  private int voteCount;
+  @SerializedName("genres")
+  private List<Genres> genres;
+  @SerializedName("production_companies")
+  private List<Genres> productionCompanies;
+  @SerializedName("production_countries")
+  private List<ProductionCountries> productionCountries;
+  @SerializedName("spoken_languages")
+  private List<SpokenLanguages> spokenLanguages;
 
-  private List<Cates> cates;
-
-  //region Getters and Setters
-  public String getPostid() {
-    return postid;
+  public boolean isAdult() {
+    return adult;
   }
 
-  public void setPostid(String postid) {
-    this.postid = postid;
+  public void setAdult(boolean adult) {
+    this.adult = adult;
   }
 
-  public String getTitle() {
-    return title;
+  public String getBackdropPath() {
+    return backdropPath;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setBackdropPath(String backdropPath) {
+    this.backdropPath = backdropPath;
   }
 
-  public String getPid() {
-    return pid;
+  public Object getBelongsToCollection() {
+    return belongsToCollection;
   }
 
-  public void setPid(String pid) {
-    this.pid = pid;
+  public void setBelongsToCollection(Object belongsToCollection) {
+    this.belongsToCollection = belongsToCollection;
   }
 
-  public String getApp_fu_title() {
-    return app_fu_title;
+  public int getBudget() {
+    return budget;
   }
 
-  public void setApp_fu_title(String app_fu_title) {
-    this.app_fu_title = app_fu_title;
+  public void setBudget(int budget) {
+    this.budget = budget;
   }
 
-  public String getIs_xpc() {
-    return is_xpc;
+  public String getHomepage() {
+    return homepage;
   }
 
-  public void setIs_xpc(String is_xpc) {
-    this.is_xpc = is_xpc;
+  public void setHomepage(String homepage) {
+    this.homepage = homepage;
   }
 
-  public String getIs_promote() {
-    return is_promote;
+  public int getId() {
+    return id;
   }
 
-  public void setIs_promote(String is_promote) {
-    this.is_promote = is_promote;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public String getIs_xpc_zp() {
-    return is_xpc_zp;
+  public String getImdbId() {
+    return imdbId;
   }
 
-  public void setIs_xpc_zp(String is_xpc_zp) {
-    this.is_xpc_zp = is_xpc_zp;
+  public void setImdbId(String imdbId) {
+    this.imdbId = imdbId;
   }
 
-  public String getIs_xpc_cp() {
-    return is_xpc_cp;
+  public String getOriginalLanguage() {
+    return originalLanguage;
   }
 
-  public void setIs_xpc_cp(String is_xpc_cp) {
-    this.is_xpc_cp = is_xpc_cp;
+  public void setOriginalLanguage(String originalLanguage) {
+    this.originalLanguage = originalLanguage;
   }
 
-  public String getIs_xpc_fx() {
-    return is_xpc_fx;
+  public String getOriginalTitle() {
+    return originalTitle;
   }
 
-  public void setIs_xpc_fx(String is_xpc_fx) {
-    this.is_xpc_fx = is_xpc_fx;
+  public void setOriginalTitle(String originalTitle) {
+    this.originalTitle = originalTitle;
   }
 
-  public String getIs_album() {
-    return is_album;
+  public String getOverview() {
+    return overview;
   }
 
-  public void setIs_album(String is_album) {
-    this.is_album = is_album;
+  public void setOverview(String overview) {
+    this.overview = overview;
   }
 
-  public String getTags() {
-    return tags;
+  public double getPopularity() {
+    return popularity;
   }
 
-  public void setTags(String tags) {
-    this.tags = tags;
+  public void setPopularity(double popularity) {
+    this.popularity = popularity;
   }
 
-  public String getRecent_hot() {
-    return recent_hot;
+  public Object getPosterPath() {
+    return posterPath;
   }
 
-  public void setRecent_hot(String recent_hot) {
-    this.recent_hot = recent_hot;
+  public void setPosterPath(Object posterPath) {
+    this.posterPath = posterPath;
   }
 
-  public String getDiscussion() {
-    return discussion;
+  public String getReleaseDate() {
+    return releaseDate;
   }
 
-  public void setDiscussion(String discussion) {
-    this.discussion = discussion;
+  public void setReleaseDate(String releaseDate) {
+    this.releaseDate = releaseDate;
   }
 
-  public String getImage() {
-    return image;
+  public int getRevenue() {
+    return revenue;
   }
 
-  public void setImage(String image) {
-    this.image = image;
+  public void setRevenue(int revenue) {
+    this.revenue = revenue;
   }
 
-  public String getRating() {
-    return rating;
+  public int getRuntime() {
+    return runtime;
   }
 
-  public void setRating(String rating) {
-    this.rating = rating;
+  public void setRuntime(int runtime) {
+    this.runtime = runtime;
   }
 
-  public String getDuration() {
-    return duration;
+  public String getStatus() {
+    return status;
   }
 
-  public void setDuration(String duration) {
-    this.duration = duration;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
-  public String getPublish_time() {
-    return publish_time;
+  public String getTagline() {
+    return tagline;
   }
 
-  public void setPublish_time(String publish_time) {
-    this.publish_time = publish_time;
+  public void setTagline(String tagline) {
+    this.tagline = tagline;
   }
 
-  public String getLike_num() {
-    return like_num;
+  public boolean isVideo() {
+    return video;
   }
 
-  public void setLike_num(String like_num) {
-    this.like_num = like_num;
+  public void setVideo(boolean video) {
+    this.video = video;
   }
 
-  public String getShare_num() {
-    return share_num;
+  public double getVoteAverage() {
+    return voteAverage;
   }
 
-  public void setShare_num(String share_num) {
-    this.share_num = share_num;
+  public void setVoteAverage(double voteAverage) {
+    this.voteAverage = voteAverage;
   }
 
-  public String getRequest_url() {
-    return request_url;
+  public int getVoteCount() {
+    return voteCount;
   }
 
-  public void setRequest_url(String request_url) {
-    this.request_url = request_url;
+  public void setVoteCount(int voteCount) {
+    this.voteCount = voteCount;
   }
 
-  public List<Cates> getCates() {
-    return cates;
-  }
-  //endregion
-
-  public void setCates(List<Cates> cates) {
-    this.cates = cates;
+  public List<Genres> getGenres() {
+    return genres;
   }
 
-  public static class Cates {
-    private String cateid;
-    private String catename;
-
-    //region Getters and Setters
-    public String getCateid() {
-      return cateid;
-    }
-
-    public void setCateid(String cateid) {
-      this.cateid = cateid;
-    }
-
-    public String getCatename() {
-      return catename;
-    }
-
-    public void setCatename(String catename) {
-      this.catename = catename;
-    }
-    //endregion
+  public void setGenres(List<Genres> genres) {
+    this.genres = genres;
   }
+
+  public List<Genres> getProductionCompanies() {
+    return productionCompanies;
+  }
+
+  public void setProductionCompanies(List<Genres> productionCompanies) {
+    this.productionCompanies = productionCompanies;
+  }
+
+  public List<ProductionCountries> getProductionCountries() {
+    return productionCountries;
+  }
+
+  public void setProductionCountries(List<ProductionCountries> productionCountries) {
+    this.productionCountries = productionCountries;
+  }
+
+  public List<SpokenLanguages> getSpokenLanguages() {
+    return spokenLanguages;
+  }
+
+  public void setSpokenLanguages(List<SpokenLanguages> spokenLanguages) {
+    this.spokenLanguages = spokenLanguages;
+  }
+
 }

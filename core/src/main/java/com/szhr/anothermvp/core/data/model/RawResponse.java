@@ -1,34 +1,60 @@
 package com.szhr.anothermvp.core.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+@SuppressWarnings("unused")
 public class RawResponse<T> {
 
-  private String status;
-  private String msg;
-  private T data;
+    // region Fields
+    @SerializedName("page")
+    private int page;
+    @SerializedName("results")
+    private List<T> results = null;
+    @SerializedName("total_results")
+    private int totalResults;
+    @SerializedName("total_pages")
+    private int totalPages;
+    // endregion
 
-  //region Getters and Setters
-  public String getStatus() {
-    return status;
-  }
+    // region Getters
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
+    public int getPage() {
+      return page;
+    }
 
-  public String getMsg() {
-    return msg;
-  }
+    public List<T> getResults() {
+      return results;
+    }
 
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
+    public int getTotalResults() {
+      return totalResults;
+    }
 
-  public T getData() {
-    return data;
-  }
+    public int getTotalPages() {
+      return totalPages;
+    }
 
-  public void setData(T data) {
-    this.data = data;
-  }
-  //endregion
+    // endregion
+
+    // region Setters
+
+    public void setPage(int page) {
+      this.page = page;
+    }
+
+    public void setResults(List<T> results) {
+      this.results = results;
+    }
+
+    public void setTotalResults(int totalResults) {
+      this.totalResults = totalResults;
+    }
+
+    public void setTotalPages(int totalPages) {
+      this.totalPages = totalPages;
+    }
+
+    // endregion
 }

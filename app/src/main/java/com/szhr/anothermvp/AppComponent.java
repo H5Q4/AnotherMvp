@@ -1,7 +1,7 @@
 package com.szhr.anothermvp;
 
 import com.szhr.anothermvp.core.data.remote.NetworkModule;
-import com.szhr.anothermvp.ui.hotmovies.HotMoviesActivity;
+import com.szhr.anothermvp.ui.popular_movies.PopularMoviesActivity;
 
 import javax.inject.Singleton;
 
@@ -14,6 +14,6 @@ import dagger.Component;
 })
 public interface AppComponent {
 
-  void inject(HotMoviesActivity activity);
+  void inject(PopularMoviesActivity activity);
 
 }

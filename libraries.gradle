@@ -12,11 +12,16 @@ ext {
       retrofit2     : '2.1.0',
       rxjava        : '1.2.4',
       rxandroid     : '1.2.1',
+      stetho        : '1.4.2'
   ]
 
   //libraries dependencies
   libBumptech = [
       glide: "com.github.bumptech.glide:glide:${libVersions.glide}",
+  ]
+  libFacebook = [
+      stetho        : "com.facebook.stetho:stetho:${libVersions.stetho}",
+      stetho4Okhttp3: "com.facebook.stetho:stetho-okhttp3:${libVersions.stetho}",
   ]
   libGoogle = [
       //android support
