@@ -6,10 +6,6 @@ import com.szhr.anothermvp.core.ui.popular_movies.PopularMoviesView;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Provide PopularMoviesView and PopularMoviesPresenter for hot movies
- */
-
 @Module
 @SuppressWarnings("unused")
 public class PopularMoviesModule {
