@@ -5,6 +5,8 @@ import android.content.res.Resources;
 
 import com.github.jupittar.commlib.utilities.NetworkUtils;
 import com.szhr.anothermvp.core.SchedulerProvider;
+import com.szhr.anothermvp.core.data.entity.Configuration;
+import com.szhr.anothermvp.util.SharedPreferencesManager;
 
 import java.io.File;
 
@@ -22,6 +24,13 @@ public class AppModule {
 
   AppModule(TmdbApp app) {
     this.mApp = app;
+  }
+
+  @Provides
+  @Named("isApiConfigurationExisted")
+  boolean isApiConfigurationExisted(Context context) {
+    Configuration configuration = SharedPreferencesManager.getConfiguration(context);
+    return configuration != null;
   }
 
   @Provides

@@ -20,8 +20,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.CallAdapter;
-import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,8 +38,8 @@ public class NetworkModule {
   @Provides
   @Singleton
   public Retrofit provideRetrofit(
-      Converter.Factory converterFactory,
-      CallAdapter.Factory callAdapterFactory,
+      GsonConverterFactory converterFactory,
+      RxJavaCallAdapterFactory callAdapterFactory,
       OkHttpClient okHttpClient
       ) {
     return new Retrofit

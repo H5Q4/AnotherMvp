@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.szhr.anothermvp.core.data.remote.NetworkModule;
+import com.szhr.anothermvp.core.util.Constants;
 
 public class TmdbApp extends Application {
 
@@ -30,6 +32,7 @@ public class TmdbApp extends Application {
     return DaggerAppComponent
         .builder()
         .appModule(new AppModule(this))
+        .networkModule(new NetworkModule())
         .build();
   }
 

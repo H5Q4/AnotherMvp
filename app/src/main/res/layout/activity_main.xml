@@ -1,24 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".ui.popular_movies.PopularMoviesActivity">
+              android:orientation="vertical"
+             tools:context=".ui.movie.popular.PopularMoviesActivity">
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/recycler_view"
+  <include layout="@layout/toolbar" />
+
+  <FrameLayout
+      android:id="@+id/fl_content"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
 
-  <com.github.jupittar.commlib.custom.LoadingImageView
-      android:id="@+id/loading_iv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:src="@drawable/loading_logo"
-      app:anim_auto_start="true"
-      app:mask_color="?colorAccent"/>
-
-  <include layout="@layout/layout_error"/>
-
-</FrameLayout>
+</LinearLayout>
