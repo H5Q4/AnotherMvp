@@ -1,13 +1,13 @@
 package com.szhr.anothermvp.core.ui.movie.popular;
 
-import com.szhr.anothermvp.core.SchedulerProvider;
+import com.szhr.anothermvp.core.util.SchedulerProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Subscription;
 
-public class PopularMoviesPresenter extends PopularMoviesMvp.Presenter<PopularMoviesView> {
+public class PopularMoviesPresenter extends PopularMoviesMvp.Presenter<PopularMoviesMvp.View> {
 
   @Inject
   PopularMoviesInteractor mInteractor;
@@ -23,21 +23,35 @@ public class PopularMoviesPresenter extends PopularMoviesMvp.Presenter<PopularMo
   }
 
   @Override
-  void showPopularMovies(int page) {
+  public void showPopularMovies(int page) {
     if (!mIsApiConfigurationExisted) {
-      mInteractor
+      Subscription subscription = mInteractor
           .loadApiConfiguration()
           .observeOn(mSchedulerProvider.mainThread())
-          .subscribe(configuration -> handlePopularMovies(page));
+          .subscribe(configuration -> {
+            getView().saveApiConfiguration(configuration);
+            handlePopularMovies(page);
+          }, throwable -> {
+            getView().hideLoading();
+            getView().showErrorMessage(throwable);
+          });
+      addSubscription(subscription);
     } else {
       handlePopularMovies(page);
     }
   }
 
-  private Subscription handlePopularMovies(int page) {
-    return mInteractor
+  private void handlePopularMovies(int page) {
+    Subscription subscription = mInteractor
         .loadMovies(page)
         .observeOn(mSchedulerProvider.mainThread())
-        .subscribe(movies -> {});
+        .subscribe(movies -> {
+          getView().hideLoading();
+          getView().showMovies(movies);
+        }, throwable -> {
+          getView().hideLoading();
+          getView().showErrorMessage(throwable);
+        });
+    addSubscription(subscription);
   }
 }

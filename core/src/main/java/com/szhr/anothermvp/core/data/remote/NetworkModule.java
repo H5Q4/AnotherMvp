@@ -1,10 +1,16 @@
 package com.szhr.anothermvp.core.data.remote;
 
 import com.google.gson.Gson;
+import com.szhr.anothermvp.core.data.remote.interceptor.AuthInterceptor;
+import com.szhr.anothermvp.core.data.remote.interceptor.HttpCacheInterceptor;
+import com.szhr.anothermvp.core.data.remote.interceptor.HttpLoggingInterceptor;
+import com.szhr.anothermvp.core.data.remote.interceptor.HttpOfflineCacheInterceptor;
+import com.szhr.anothermvp.core.data.remote.interceptor.RetryInterceptor;
 import com.szhr.anothermvp.core.util.Constants;
+import com.szhr.anothermvp.core.util.LoggerHelper;
+import com.szhr.anothermvp.core.util.NetworkHelper;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
@@ -13,13 +19,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,7 +41,7 @@ public class NetworkModule {
       GsonConverterFactory converterFactory,
       RxJavaCallAdapterFactory callAdapterFactory,
       OkHttpClient okHttpClient
-      ) {
+  ) {
     return new Retrofit
         .Builder()
         .baseUrl(Constants.BASE_URL)
@@ -77,14 +77,15 @@ public class NetworkModule {
       @Named("isDebug") boolean isDebug,
       Cache cache,
       HttpLoggingInterceptor loggingInterceptor,
-      @Named("authInterceptor") Interceptor authInterceptor,
-      @Named("cacheInterceptor") Interceptor cacheInterceptor,
-      @Named("offlineCacheInterceptor") Interceptor offlineInterceptor
-      ) {
+      AuthInterceptor authInterceptor,
+      HttpCacheInterceptor cacheInterceptor,
+      HttpOfflineCacheInterceptor offlineInterceptor
+  ) {
     OkHttpClient.Builder builder = new OkHttpClient.Builder()
         .connectTimeout(Constants.NETWORK_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(Constants.NETWORK_READ_TIMEOUT, TimeUnit.SECONDS)
         .writeTimeout(Constants.NETWORK_WRITE_TIMEOUT, TimeUnit.SECONDS)
+        .addInterceptor(authInterceptor)
         .addNetworkInterceptor(cacheInterceptor)
         .addInterceptor(offlineInterceptor)
         .cache(cache);
@@ -100,7 +101,7 @@ public class NetworkModule {
   @Singleton
   public Cache provideCache(
       @Named("cacheDir") File cacheDir
-      ) {
+  ) {
     Cache cache = null;
     try {
       cache = new Cache(new File(cacheDir.getPath(), "http"), Constants.CACHE_SIZE);
@@ -112,97 +113,34 @@ public class NetworkModule {
 
   @Provides
   @Singleton
-  public HttpLoggingInterceptor provideHttpLoggingInterceptor() {
-    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-    return interceptor;
+  public HttpLoggingInterceptor provideHttpLoggingInterceptor(LoggerHelper loggerHelper) {
+    return new HttpLoggingInterceptor(loggerHelper);
   }
 
   @Provides
   @Singleton
-  @Named("authInterceptor")
-  public Interceptor provideAuthInterceptor() {
-    return chain -> {
-      Request request = chain.request();
-      HttpUrl url = request.url();
-      HttpUrl newUrl = url.newBuilder()
-          .addQueryParameter("api_key", Constants.API_KEY)
-          .addQueryParameter("language", "en-US")
-          .build();
-      Request newRequest = request.newBuilder()
-          .url(newUrl)
-          .build();
-
-      return chain.proceed(newRequest);
-    };
+  public AuthInterceptor provideAuthInterceptor() {
+    return new AuthInterceptor();
   }
 
   @Provides
   @Singleton
-  @Named("cacheInterceptor")
-  public Interceptor provideCacheInterceptor() {
-    return chain -> {
-      Response response = chain.proceed(chain.request());
-      CacheControl cacheControl = new CacheControl.Builder()
-          .maxAge(Constants.CACHE_MAX_AGE_MINS, TimeUnit.MINUTES)
-          .build();
-      return response.newBuilder()
-          .removeHeader("Pragma")
-          .header("Cache-Control", cacheControl.toString())
-          .build();
-    };
+  public HttpCacheInterceptor provideCacheInterceptor() {
+    return new HttpCacheInterceptor();
   }
 
   @Provides
   @Singleton
-  @Named("offlineCacheInterceptor")
-  public Interceptor provideOfflineCacheInterceptor(
-      @Named("isNetworkConnected") boolean isNetworkConnected
+  public HttpOfflineCacheInterceptor provideOfflineCacheInterceptor(
+      NetworkHelper networkHelper
   ) {
-    return chain -> {
-      Request request = chain.request();
-
-      if (!isNetworkConnected) {
-        CacheControl cacheControl = new CacheControl.Builder()
-            .maxStale(Constants.CACHE_MAX_STALE_DAYS, TimeUnit.DAYS)
-            .build();
-        request = request.newBuilder()
-            .cacheControl(cacheControl)
-            .build();
-      }
-
-      return chain.proceed(request);
-    };
+    return new HttpOfflineCacheInterceptor(networkHelper);
   }
 
   @Provides
   @Singleton
-  @Named("retryInterceptor")
-  public Interceptor provideRetryInterceptor() {
-    return chain -> {
-      Request request = chain.request();
-      Response response = null;
-      IOException exception = null;
-
-      int tryCount = 0;
-      while (tryCount < Constants.RETRY_COUNT && (null == response || !response.isSuccessful())) {
-        // retry the request
-        try {
-          response = chain.proceed(request);
-        } catch (IOException e) {
-          exception = e;
-        } finally {
-          tryCount++;
-        }
-      }
-
-      // throw last exception
-      if (null == response && null != exception)
-        throw exception;
-
-      // otherwise just pass the original response on
-      return response;
-    };
+  public RetryInterceptor provideRetryInterceptor() {
+    return new RetryInterceptor();
   }
   //endregion
 

@@ -9,7 +9,9 @@ import com.szhr.anothermvp.ui.base.BaseActivity;
 
 import butterknife.BindView;
 
-public class PopularMoviesActivity extends BaseActivity {
+public class PopularMoviesActivity
+    extends BaseActivity
+    implements PopularMoviesFragment.OnFragmentInteractionListener {
 
   private static final String TAG_FRAGMENT_POPULARMOVIES = "PopularMoviesFragment";
 

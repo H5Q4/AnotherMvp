@@ -1,6 +1,6 @@
-package com.szhr.anothermvp;
+package com.szhr.anothermvp.util;
 
-import com.szhr.anothermvp.core.SchedulerProvider;
+import com.szhr.anothermvp.core.util.SchedulerProvider;
 
 import javax.inject.Inject;
 
@@ -11,10 +11,6 @@ import rx.schedulers.Schedulers;
 @SuppressWarnings("unused")
 public class AppSchedulerProvider implements SchedulerProvider {
 
-  @Inject
-  public AppSchedulerProvider() {
-  }
-
   @Override
   public Scheduler mainThread() {
     return AndroidSchedulers.mainThread();
@@ -24,4 +20,5 @@ public class AppSchedulerProvider implements SchedulerProvider {
   public Scheduler backgroundThread() {
     return Schedulers.io();
   }
+
 }

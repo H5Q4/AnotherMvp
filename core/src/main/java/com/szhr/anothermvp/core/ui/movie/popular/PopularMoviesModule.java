@@ -9,20 +9,20 @@ import dagger.Provides;
 @SuppressWarnings("unused")
 public class PopularMoviesModule {
 
-  private PopularMoviesView mView;
+  private PopularMoviesMvp.View mView;
 
-  public PopularMoviesModule(PopularMoviesView view) {
+  public PopularMoviesModule(PopularMoviesMvp.View view) {
     mView = view;
   }
 
   @Provides
-  public PopularMoviesView provideView() {
+  public PopularMoviesMvp.View provideView() {
     return mView;
   }
 
   @Provides
   @PopularMoviesScope
-  public PopularMoviesMvp.Presenter<PopularMoviesView> providePresenter(
+  public PopularMoviesMvp.Presenter<PopularMoviesMvp.View> providePresenter(
       PopularMoviesPresenter presenter) {
     presenter.attach(mView);
     return presenter;

@@ -4,9 +4,15 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.github.jupittar.commlib.utilities.NetworkUtils;
-import com.szhr.anothermvp.core.SchedulerProvider;
+import com.szhr.anothermvp.core.util.LoggerHelper;
+import com.szhr.anothermvp.core.util.NetworkHelper;
+import com.szhr.anothermvp.core.util.SchedulerProvider;
 import com.szhr.anothermvp.core.data.entity.Configuration;
+import com.szhr.anothermvp.util.AppNetworkHelper;
+import com.szhr.anothermvp.util.AppSchedulerProvider;
+import com.szhr.anothermvp.util.AppLoggerHelper;
 import com.szhr.anothermvp.util.SharedPreferencesManager;
+import com.szhr.anothermvp.util.TmdbApiConfigurationUtils;
 
 import java.io.File;
 
@@ -27,6 +33,27 @@ public class AppModule {
   }
 
   @Provides
+  @Singleton
+  LoggerHelper provideLoggerHelper(Context context) {
+    return new AppLoggerHelper(context);
+  }
+
+  @Provides
+  @Singleton
+  @Named("secureBaseUrl")
+  String provideSecureBaseUrl(Context context) {
+    return TmdbApiConfigurationUtils.getSecureBaseUrl(context);
+  }
+
+  @Provides
+  @Singleton
+  @Named("posterSize")
+  String providePosterSize(Context context) {
+    return TmdbApiConfigurationUtils.getPosterSize(context);
+  }
+
+  @Provides
+  @Singleton
   @Named("isApiConfigurationExisted")
   boolean isApiConfigurationExisted(Context context) {
     Configuration configuration = SharedPreferencesManager.getConfiguration(context);
@@ -47,9 +74,9 @@ public class AppModule {
   }
 
   @Provides
-  @Named("isNetworkConnected")
-  boolean isNetworkConnected(Context context) {
-    return NetworkUtils.isNetworkConnected(context);
+  @Singleton
+  NetworkHelper provideNetworkHelper(Context context) {
+    return new AppNetworkHelper(context);
   }
 
   @Provides

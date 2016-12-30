@@ -2,19 +2,20 @@ package com.szhr.anothermvp.core.ui.base;
 
 import com.szhr.anothermvp.core.data.entity.Configuration;
 
-import rx.Observable;
 import rx.Subscription;
 
 @SuppressWarnings("unused")
 public interface Mvp {
 
-  interface Interactor {
-    Observable<Configuration> loadApiConfiguration();
-  }
+  interface Interactor {}
 
   interface View {
     void showLoading();
     void hideLoading();
+
+    void showErrorMessage(Throwable throwable);
+
+    void saveApiConfiguration(Configuration configuration);
   }
 
   interface Presenter<V extends View> {

@@ -1,4 +1,4 @@
-package com.szhr.anothermvp.core;
+package com.szhr.anothermvp.core.util;
 
 import rx.Scheduler;
 

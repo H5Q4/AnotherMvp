@@ -1,7 +1,6 @@
 package com.szhr.anothermvp.core.ui.movie.popular;
 
-import com.szhr.anothermvp.core.SchedulerProvider;
-import com.szhr.anothermvp.core.data.entity.Configuration;
+import com.szhr.anothermvp.core.util.SchedulerProvider;
 import com.szhr.anothermvp.core.data.entity.Movie;
 import com.szhr.anothermvp.core.data.entity.RawResponse;
 import com.szhr.anothermvp.core.data.remote.TmdbService;
@@ -14,15 +13,11 @@ import rx.Observable;
 
 @PopularMoviesScope
 @SuppressWarnings("unused")
-class PopularMoviesInteractor implements PopularMoviesMvp.Interactor {
-
-  private TmdbService mTmdbService;
-  private SchedulerProvider mSchedulerProvider;
+class PopularMoviesInteractor extends PopularMoviesMvp.Interactor {
 
   @Inject
   public PopularMoviesInteractor(TmdbService tmdbService, SchedulerProvider schedulerProvider) {
-    mTmdbService = tmdbService;
-    mSchedulerProvider = schedulerProvider;
+    super(tmdbService, schedulerProvider);
   }
 
   @Override
@@ -33,8 +28,4 @@ class PopularMoviesInteractor implements PopularMoviesMvp.Interactor {
         .map(RawResponse::getResults);
   }
 
-  @Override
-  public Observable<Configuration> loadApiConfiguration() {
-    return null;
-  }
 }

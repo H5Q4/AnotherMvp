@@ -14,7 +14,7 @@
   <com.github.jupittar.commlib.custom.AspectRatioImageView
       android:id="@+id/iv_movie_poster"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+      android:layout_height="match_parent"/>
 
   <RelativeLayout
       android:layout_width="match_parent"
@@ -30,7 +30,6 @@
         android:id="@+id/tv_movie_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
         android:textSize="16sp"/>
 
     <com.github.jupittar.commlib.custom.LobsterTextView
@@ -39,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_movie_title"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:textColor="@android:color/white"
         android:textSize="12sp"/>
 
   </RelativeLayout>

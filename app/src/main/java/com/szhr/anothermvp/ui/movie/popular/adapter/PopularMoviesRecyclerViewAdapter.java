@@ -10,6 +10,7 @@ import com.github.jupittar.commlib.custom.recyclerview.CommonViewHolder;
 import com.github.jupittar.commlib.custom.recyclerview.adapter.CommonViewAdapter;
 import com.szhr.anothermvp.R;
 import com.szhr.anothermvp.core.data.entity.Movie;
+import com.szhr.anothermvp.util.TmdbApiConfigurationUtils;
 
 public class PopularMoviesRecyclerViewAdapter extends CommonViewAdapter<Movie> {
 
@@ -23,10 +24,16 @@ public class PopularMoviesRecyclerViewAdapter extends CommonViewAdapter<Movie> {
     TextView tvTitle = holder.getView(R.id.tv_movie_title);
     TextView tvReleaseDate = holder.getView(R.id.tv_release_date);
     ivPoster.setAspectRatio(AspectRatioImageView.PHI);
+    String imagePath = String.format("%s%s%s",
+        TmdbApiConfigurationUtils.getSecureBaseUrl(mContext),
+        TmdbApiConfigurationUtils.getPosterSize(mContext),
+        movie.getBackdropPath());
     Glide.with(ivPoster.getContext())
-        .load(movie.getPosterPath())
+        .load(imagePath)
         .centerCrop()
         .into(ivPoster);
+    tvTitle.setText(movie.getOriginalTitle());
+    tvReleaseDate.setText(movie.getReleaseDate());
   }
 
 }

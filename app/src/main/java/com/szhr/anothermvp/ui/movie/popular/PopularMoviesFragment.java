@@ -9,26 +9,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.szhr.anothermvp.AppComponent;
 import com.szhr.anothermvp.R;
-import com.szhr.anothermvp.core.ui.movie.popular.PopularMoviesPresenter;
-import com.szhr.anothermvp.core.ui.movie.popular.PopularMoviesView;
+import com.szhr.anothermvp.core.data.entity.Configuration;
+import com.szhr.anothermvp.core.data.entity.Movie;
+import com.szhr.anothermvp.core.ui.movie.popular.PopularMoviesMvp;
 import com.szhr.anothermvp.ui.base.BaseFragment;
+import com.szhr.anothermvp.ui.movie.popular.adapter.PopularMoviesRecyclerViewAdapter;
 import com.szhr.anothermvp.util.SharedPreferencesManager;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class PopularMoviesFragment extends BaseFragment implements PopularMoviesView {
+public class PopularMoviesFragment
+    extends BaseFragment
+    implements PopularMoviesMvp.View {
 
   public static final String TAG = PopularMoviesFragment.class.getSimpleName();
 
   @Inject
   OnFragmentInteractionListener mListener;
   @Inject
-  PopularMoviesPresenter mPresenter;
+  PopularMoviesMvp.Presenter<PopularMoviesMvp.View> mPresenter;
 
   @BindView(R.id.recycler_view)
   RecyclerView mRecyclerView;
@@ -36,6 +43,8 @@ public class PopularMoviesFragment extends BaseFragment implements PopularMovies
   ProgressBar mProgressBar;
   @BindView(R.id.layout_error)
   View mLayoutError;
+
+  private PopularMoviesRecyclerViewAdapter mPopularMoviesRecyclerViewAdapter;
 
   public PopularMoviesFragment() {
     // Required empty public constructor
@@ -50,13 +59,17 @@ public class PopularMoviesFragment extends BaseFragment implements PopularMovies
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     setUpRecyclerView();
+    mPresenter.showPopularMovies(1);
   }
 
   private void setUpRecyclerView() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     mRecyclerView.setLayoutManager(layoutManager);
-
+    mRecyclerView.setHasFixedSize(true);
+    mPopularMoviesRecyclerViewAdapter = new PopularMoviesRecyclerViewAdapter(getActivity(),
+        R.layout.item_movie);
+    mRecyclerView.setAdapter(mPopularMoviesRecyclerViewAdapter);
   }
 
   @Override
@@ -89,6 +102,21 @@ public class PopularMoviesFragment extends BaseFragment implements PopularMovies
   @Override
   public void hideLoading() {
     mProgressBar.setVisibility(View.GONE);
+  }
+
+  @Override
+  public void showErrorMessage(Throwable throwable) {
+    Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+  }
+
+  @Override
+  public void saveApiConfiguration(Configuration configuration) {
+    SharedPreferencesManager.setConfiguration(getActivity(), configuration);
+  }
+
+  @Override
+  public void showMovies(List<Movie> movies) {
+    mPopularMoviesRecyclerViewAdapter.addAll(movies);
   }
 
   /**

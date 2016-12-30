@@ -5,9 +5,25 @@ configurations {
   annotationProcessor
 }
 
+def generatedSources = "$buildDir/generated/src/main/java"
+def generatedOutputDir = file("$generatedSources")
+
+compileJava {
+  doFirst {
+    generatedOutputDir.exists() || generatedOutputDir.mkdirs()
+    options.compilerArgs = [
+        '-s', "${generatedSources}"
+    ]
+  }
+}
+compileJava.dependsOn clean
+
 sourceSets {
   main {
     compileClasspath += configurations.annotationProcessor
+    java {
+      srcDirs += generatedOutputDir
+    }
   }
 }
 
@@ -17,7 +33,6 @@ dependencies {
   compile rootProject.ext.libReactiveX.rxjava
 
   compile rootProject.ext.libSquareup.okhttp3
-  compile rootProject.ext.libSquareup.okhttp3LoggingInterceptor
 
   compile rootProject.ext.libSquareup.retrofit2
   compile rootProject.ext.libSquareup.rxjavaAdapter4Retrofit2

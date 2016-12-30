@@ -11,13 +11,13 @@ import rx.Observable;
 
 public interface TmdbService {
 
-  @GET("/configuration")
+  @GET("configuration")
   Observable<Configuration> getApiConfiguration();
 
-  @GET("/movie/popular")
+  @GET("movie/popular")
   Observable<RawResponse<Movie>> getPopularMovies(@Query("page") int page);
 
-  @GET("/movie/{movieId}")
+  @GET("movie/{movieId}")
   Observable<Movie> getMovieDetails(@Path("movieId") long movieId);
 
 }
