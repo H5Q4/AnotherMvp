@@ -14,7 +14,7 @@ public class AppPopularMoviesModule extends PopularMoviesModule {
 
   private PopularMoviesFragment.OnFragmentInteractionListener mListener;
 
-  public AppPopularMoviesModule(Context context, PopularMoviesFragment fragment) {
+  AppPopularMoviesModule(Context context, PopularMoviesFragment fragment) {
     super(fragment);
 
     if (context instanceof PopularMoviesFragment.OnFragmentInteractionListener) {
@@ -27,7 +27,7 @@ public class AppPopularMoviesModule extends PopularMoviesModule {
 
   @Provides
   @PopularMoviesScope
-  public PopularMoviesFragment.OnFragmentInteractionListener provideOnFragmentInteractionListener() {
+  PopularMoviesFragment.OnFragmentInteractionListener provideOnFragmentInteractionListener() {
     return mListener;
   }
 }

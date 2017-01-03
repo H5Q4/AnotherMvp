@@ -1,7 +1,7 @@
 package com.github.jupittar.commlib.utilities;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
 public class WindowUtils {
@@ -9,7 +9,7 @@ public class WindowUtils {
   /**
    * Returns the screen height pixels
    */
-  public static int getScreenHeight(Activity context) {
+  public static int getScreenHeight(AppCompatActivity context) {
     DisplayMetrics outMetrics = new DisplayMetrics();
     context.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
     return outMetrics.heightPixels;
@@ -18,7 +18,7 @@ public class WindowUtils {
   /**
    * Returns the screen width pixels
    */
-  public static int getScreenWidth(Activity context) {
+  public static int getScreenWidth(AppCompatActivity context) {
     DisplayMetrics outMetrics = new DisplayMetrics();
     context.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
     return outMetrics.widthPixels;

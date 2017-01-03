@@ -30,7 +30,7 @@ public class HttpOfflineCacheInterceptor implements Interceptor {
           .build();
       request = request.newBuilder()
           .cacheControl(cacheControl)
-          // if server don't support cache header, uncomment below to replace the upper line
+          // if your server doesn't support cache header, uncomment below to replace the upper line
           // may work(not tested!)
 //          .header("Cache-Control", "public, only-if-cached, max-stale="
 //              + Constants.CACHE_MAX_STALE_DAYS * 24 * 60 * 60)

@@ -13,7 +13,7 @@ public class PopularMoviesActivity
     extends BaseActivity
     implements PopularMoviesFragment.OnFragmentInteractionListener {
 
-  private static final String TAG_FRAGMENT_POPULARMOVIES = "PopularMoviesFragment";
+  private static final String TAG_FRAGMENT_POPULAR_MOVIES = "PopularMoviesFragment";
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -27,12 +27,12 @@ public class PopularMoviesActivity
     setUpToolbar();
     if (savedInstanceState != null) {
       mPopularMoviesFragment = (PopularMoviesFragment) getSupportFragmentManager()
-          .findFragmentByTag(TAG_FRAGMENT_POPULARMOVIES);
+          .findFragmentByTag(TAG_FRAGMENT_POPULAR_MOVIES);
     } else {
       mPopularMoviesFragment = PopularMoviesFragment.newInstance();
       getSupportFragmentManager()
           .beginTransaction()
-          .replace(R.id.fl_content, mPopularMoviesFragment, TAG_FRAGMENT_POPULARMOVIES)
+          .replace(R.id.fl_content, mPopularMoviesFragment, TAG_FRAGMENT_POPULAR_MOVIES)
           .commit();
     }
   }

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.jupittar.commlib.custom.recyclerview.EndlessScrollListener;
+import com.github.jupittar.commlib.custom.recyclerview.adapter.CommonViewAdapter;
 import com.szhr.anothermvp.AppComponent;
 import com.szhr.anothermvp.R;
 import com.szhr.anothermvp.core.data.entity.Configuration;
@@ -44,6 +46,8 @@ public class PopularMoviesFragment
   @BindView(R.id.layout_error)
   View mLayoutError;
 
+  private int mPage = 1;
+
   private PopularMoviesRecyclerViewAdapter mPopularMoviesRecyclerViewAdapter;
 
   public PopularMoviesFragment() {
@@ -59,7 +63,7 @@ public class PopularMoviesFragment
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     setUpRecyclerView();
-    mPresenter.showPopularMovies(1);
+    mPresenter.showPopularMovies(mPage);
   }
 
   private void setUpRecyclerView() {
@@ -70,6 +74,16 @@ public class PopularMoviesFragment
     mPopularMoviesRecyclerViewAdapter = new PopularMoviesRecyclerViewAdapter(getActivity(),
         R.layout.item_movie);
     mRecyclerView.setAdapter(mPopularMoviesRecyclerViewAdapter);
+    mPopularMoviesRecyclerViewAdapter.setOnItemClickListener(
+        (view, position) -> Toast.makeText(getActivity(),
+            String.valueOf(position), Toast.LENGTH_LONG).show());
+    mRecyclerView.addOnScrollListener(new EndlessScrollListener() {
+      @Override
+      public void onLoadMore() {
+        mPage++;
+        mPresenter.showPopularMovies(mPage);
+      }
+    });
   }
 
   @Override

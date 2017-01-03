@@ -21,7 +21,7 @@ public class HttpCacheInterceptor implements Interceptor {
     return response.newBuilder()
         .removeHeader("Pragma")
         .header("Cache-Control", cacheControl.toString())
-        // if server don't support cache header, uncomment below to replace the upper line
+        // if your server doesn't support cache header, uncomment below to replace the upper line
         // may work(not tested!)
 //        .header("Cache-Control", "public, max-age=" + Constants.CACHE_MAX_AGE_MINS * 60)
         .build();
