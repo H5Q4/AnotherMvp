@@ -6,9 +6,9 @@ import com.szhr.anothermvp.core.data.remote.interceptor.HttpCacheInterceptor;
 import com.szhr.anothermvp.core.data.remote.interceptor.HttpLoggingInterceptor;
 import com.szhr.anothermvp.core.data.remote.interceptor.HttpOfflineCacheInterceptor;
 import com.szhr.anothermvp.core.data.remote.interceptor.RetryInterceptor;
+import com.szhr.anothermvp.core.util.AndroidHelper;
 import com.szhr.anothermvp.core.util.Constants;
 import com.szhr.anothermvp.core.util.LoggerHelper;
-import com.szhr.anothermvp.core.util.NetworkHelper;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -132,9 +132,9 @@ public class NetworkModule {
   @Provides
   @Singleton
   public HttpOfflineCacheInterceptor provideOfflineCacheInterceptor(
-      NetworkHelper networkHelper
+      AndroidHelper androidHelper
   ) {
-    return new HttpOfflineCacheInterceptor(networkHelper);
+    return new HttpOfflineCacheInterceptor(androidHelper);
   }
 
   @Provides

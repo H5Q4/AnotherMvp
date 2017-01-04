@@ -3,6 +3,7 @@ package com.szhr.anothermvp.ui.movie.popular.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;

@@ -24,7 +24,6 @@ public class HttpLoggingInterceptor implements Interceptor {
 
   @Override
   public Response intercept(Chain chain) throws IOException {
-    mLoggerHelper.t(0);
     Request request = chain.request();
 
     long t1 = System.nanoTime();

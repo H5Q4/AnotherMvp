@@ -11,7 +11,10 @@ import com.szhr.anothermvp.AppComponent;
 import com.szhr.anothermvp.R;
 import com.szhr.anothermvp.ui.base.BaseActivity;
 
-public class MovieDetailActivity extends BaseActivity {
+import dagger.Module;
+
+public class MovieDetailActivity extends BaseActivity
+    implements MovieDetailFragment.OnFragmentInteractionListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,7 @@ public class MovieDetailActivity extends BaseActivity {
 
   @Override
   protected void injectDependencies(AppComponent component) {
-
+    component.inject(this);
   }
 
 }

@@ -3,12 +3,11 @@ package com.szhr.anothermvp;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.github.jupittar.commlib.utilities.NetworkUtils;
+import com.szhr.anothermvp.core.util.AndroidHelper;
 import com.szhr.anothermvp.core.util.LoggerHelper;
-import com.szhr.anothermvp.core.util.NetworkHelper;
 import com.szhr.anothermvp.core.util.SchedulerProvider;
 import com.szhr.anothermvp.core.data.entity.Configuration;
-import com.szhr.anothermvp.util.AppNetworkHelper;
+import com.szhr.anothermvp.util.AppAndroidHelper;
 import com.szhr.anothermvp.util.AppSchedulerProvider;
 import com.szhr.anothermvp.util.AppLoggerHelper;
 import com.szhr.anothermvp.util.SharedPreferencesManager;
@@ -34,8 +33,8 @@ public class AppModule {
 
   @Provides
   @Singleton
-  LoggerHelper provideLoggerHelper(Context context) {
-    return new AppLoggerHelper(context);
+  LoggerHelper provideLoggerHelper() {
+    return new AppLoggerHelper();
   }
 
   @Provides
@@ -54,14 +53,6 @@ public class AppModule {
 
   @Provides
   @Singleton
-  @Named("isApiConfigurationExisted")
-  boolean isApiConfigurationExisted(Context context) {
-    Configuration configuration = SharedPreferencesManager.getConfiguration(context);
-    return configuration != null;
-  }
-
-  @Provides
-  @Singleton
   SchedulerProvider provideAppScheduler() {
     return new AppSchedulerProvider();
   }
@@ -75,8 +66,8 @@ public class AppModule {
 
   @Provides
   @Singleton
-  NetworkHelper provideNetworkHelper(Context context) {
-    return new AppNetworkHelper(context);
+  AndroidHelper provideAndroidHelper(Context context) {
+    return new AppAndroidHelper(context);
   }
 
   @Provides

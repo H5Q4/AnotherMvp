@@ -1,7 +1,5 @@
 package com.szhr.anothermvp.core.ui.base;
 
-import com.szhr.anothermvp.core.data.entity.Configuration;
-
 import rx.Subscription;
 
 @SuppressWarnings("unused")
@@ -14,8 +12,6 @@ public interface Mvp {
     void hideLoading();
 
     void showErrorMessage(Throwable throwable);
-
-    void saveApiConfiguration(Configuration configuration);
   }
 
   interface Presenter<V extends View> {

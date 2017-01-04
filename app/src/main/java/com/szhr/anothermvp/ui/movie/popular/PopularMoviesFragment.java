@@ -75,8 +75,11 @@ public class PopularMoviesFragment
         R.layout.item_movie);
     mRecyclerView.setAdapter(mPopularMoviesRecyclerViewAdapter);
     mPopularMoviesRecyclerViewAdapter.setOnItemClickListener(
-        (view, position) -> Toast.makeText(getActivity(),
-            String.valueOf(position), Toast.LENGTH_LONG).show());
+        (view, position) -> {
+          SharedPreferencesManager.setConfiguration(getActivity(), null);
+          Toast.makeText(getActivity(),
+              "configuration deleted", Toast.LENGTH_LONG).show();
+        });
     mRecyclerView.addOnScrollListener(new EndlessScrollListener() {
       @Override
       public void onLoadMore() {
@@ -121,11 +124,6 @@ public class PopularMoviesFragment
   @Override
   public void showErrorMessage(Throwable throwable) {
     Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_LONG).show();
-  }
-
-  @Override
-  public void saveApiConfiguration(Configuration configuration) {
-    SharedPreferencesManager.setConfiguration(getActivity(), configuration);
   }
 
   @Override

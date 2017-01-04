@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import rx.Observable;
 
 @PopularMoviesScope
-@SuppressWarnings("unused")
 class PopularMoviesInteractor extends PopularMoviesMvp.Interactor {
 
   @Inject

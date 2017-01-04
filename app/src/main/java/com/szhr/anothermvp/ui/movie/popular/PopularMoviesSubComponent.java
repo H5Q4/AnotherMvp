@@ -4,10 +4,10 @@ import com.szhr.anothermvp.core.ui.movie.popular.PopularMoviesScope;
 
 import dagger.Subcomponent;
 
+@PopularMoviesScope
 @Subcomponent(modules = {
     AppPopularMoviesModule.class
 })
-@PopularMoviesScope
 public interface PopularMoviesSubComponent {
 
   void inject(PopularMoviesFragment fragment);

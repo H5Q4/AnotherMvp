@@ -1,4 +1,4 @@
-package com.szhr.anothermvp.core.ui.movie.popular;
+package com.szhr.anothermvp.core.ui.movie.detail;
 
 import com.szhr.anothermvp.core.util.AndroidHelper;
 import com.szhr.anothermvp.core.util.SchedulerProvider;
@@ -7,50 +7,51 @@ import javax.inject.Inject;
 
 import rx.Subscription;
 
-public class PopularMoviesPresenter extends PopularMoviesMvp.Presenter<PopularMoviesMvp.View> {
+public class MovieDetailPresenter extends MovieDetailMvp.Presenter<MovieDetailMvp.View> {
 
   @Inject
-  PopularMoviesInteractor mInteractor;
+  MovieDetailInteractor mInteractor;
   @Inject
   AndroidHelper mAndroidHelper;
 
   private SchedulerProvider mSchedulerProvider;
 
   @Inject
-  public PopularMoviesPresenter(SchedulerProvider schedulerProvider) {
+  public MovieDetailPresenter(SchedulerProvider schedulerProvider) {
     mSchedulerProvider = schedulerProvider;
   }
 
   @Override
-  public void showPopularMovies(int page) {
+  void showMovieDetail(long movieId) {
     if (!mAndroidHelper.isApiConfigurationExisted()) {
       Subscription subscription = mInteractor
           .loadApiConfiguration()
           .observeOn(mSchedulerProvider.mainThread())
           .subscribe(configuration -> {
             mAndroidHelper.saveApiConfiguration(configuration);
-            handlePopularMovies(page);
+            handleMovieDetail(movieId);
           }, throwable -> {
             getView().hideLoading();
             getView().showErrorMessage(throwable);
           });
       addSubscription(subscription);
     } else {
-      handlePopularMovies(page);
+      handleMovieDetail(movieId);
     }
   }
 
-  private void handlePopularMovies(int page) {
+  private void handleMovieDetail(long movieId) {
     Subscription subscription = mInteractor
-        .loadMovies(page)
+        .loadMovieDetail(movieId)
         .observeOn(mSchedulerProvider.mainThread())
-        .subscribe(movies -> {
+        .subscribe(movie -> {
           getView().hideLoading();
-          getView().showMovies(movies);
+          getView().setUpMovieDetail(movie);
         }, throwable -> {
           getView().hideLoading();
           getView().showErrorMessage(throwable);
         });
     addSubscription(subscription);
   }
+
 }
