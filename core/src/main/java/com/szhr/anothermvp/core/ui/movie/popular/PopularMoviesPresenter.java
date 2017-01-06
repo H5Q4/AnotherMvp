@@ -45,8 +45,8 @@ public class PopularMoviesPresenter extends PopularMoviesMvp.Presenter<PopularMo
         .loadMovies(page)
         .observeOn(mSchedulerProvider.mainThread())
         .subscribe(movies -> {
-          getView().hideLoading();
-          getView().showMovies(movies);
+//          getView().hideLoading();
+//          getView().showMovies(movies);
         }, throwable -> {
           getView().hideLoading();
           getView().showErrorMessage(throwable);

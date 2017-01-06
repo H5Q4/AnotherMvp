@@ -19,6 +19,7 @@ import com.szhr.anothermvp.core.data.entity.Configuration;
 import com.szhr.anothermvp.core.data.entity.Movie;
 import com.szhr.anothermvp.core.ui.movie.popular.PopularMoviesMvp;
 import com.szhr.anothermvp.ui.base.BaseFragment;
+import com.szhr.anothermvp.ui.custom.LoadingView;
 import com.szhr.anothermvp.ui.movie.popular.adapter.PopularMoviesRecyclerViewAdapter;
 import com.szhr.anothermvp.util.SharedPreferencesManager;
 
@@ -42,7 +43,7 @@ public class PopularMoviesFragment
   @BindView(R.id.recycler_view)
   RecyclerView mRecyclerView;
   @BindView(R.id.layout_loading)
-  ProgressBar mProgressBar;
+  LoadingView mProgressBar;
   @BindView(R.id.layout_error)
   View mLayoutError;
 
